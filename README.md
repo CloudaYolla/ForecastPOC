@@ -1,3 +1,5 @@
+![ML Logo](images/logo.png "Logo") 
+
 # Amazon Forecast - A Hands-on Workshop tailored for Data Scientists
 
 
