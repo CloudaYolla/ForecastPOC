@@ -32,19 +32,16 @@ By the end of this POC progress you should have picked up the following skills:
 -	Bring your own AWS account: The workshop will be based on sample scenarios and will be run at each participant’s own AWS account. Please make you have sufficient permissions for the services (Forecast, SageMaker, S3, IAM)
 
 
-# Workshop Audience
+# Workshop Agenda
 -  Business Overview
   - Opportunities & Challenges to Forecast
   - Major Use Cases for Forecast
 
-  - Amazon Forecast Unique benefits: Related datasets, Cold Starts
+- Time Series Analysis Primer
 
 - Algorithms Overview
   - Statistical Methods (ARIMA, NPTS, ETS)
-  - ML Models (DeepAR, Prophet)
-  - Major Challenges of Recommendation Systems
-  - High Variation, Regional demand, New items (cold start), High Seasonality
-  - Enriching Dataset with Related Time Series Data
+  - ML Models (DeepAR+, Prophet)
   - A note on Pricing
 
 - Customer Case Studies
@@ -53,11 +50,9 @@ By the end of this POC progress you should have picked up the following skills:
   - Summary & Identification of Next Steps
 
 # Hands-on Lab Modules
-  - Lab Module 1: Defining your data (Datasets, Schemas, Exploration, Ingestion) 	
-  - Lab Module 2.1: Creating a Predictor 		 				
-  - Lab Module 2.2: Evaluating Solutions	
-  - Lab Module 3: Deploying Model & Predicting				 
-
+  - Lab Module 1: Defining & Importing your data (Datasets, Exploration, Ingestion) 	
+  - Lab Module 2.1: Creating and Evaluating Forecasts	TTS 		 				
+  - Lab Module 2.2: Creating and Evaluating Forecasts	RTS
 
 ## Introduction to Amazon Forecast
 
@@ -69,53 +64,48 @@ If you are not familiar with Amazon Forecast you can learn more about this tool 
 
 
 ## Process:
-
 1. Deploying Your Working Environment
 1. Validating and Importing Target Time Series Data
-1. Validating and Importing Related Time Series Data (To Test)
 1. Creating and Evaluating Your First Predictors
-1. Importing Related Time Series Data (To Use)
+1. Importing Related Time Series Data
 1. Creating and Evaluating Related Time Series Enabled Predictors
 1. Next Steps
 
 
 
+## Preparing for the Labs
+#### Create an ML Notebook 
+
+As described here: https://docs.aws.amazon.com/sagemaker/latest/dg/gs-setup-working-env.html While specifying notebook, select 
+
+    - `Instance Type` as `t3.micro`
+    - `Additional Configuration -> Volume Size in GB` and enter 5GB
+    - Add following IAM policies to the IAM role attached to the SageMaker Notebook:
+       - `AmazonSageMakerFullAccess`
+       - `AmazonS3FullAccess` 
+       
+#### Download Lab Guides & SageMaker Sample Notebooks (in SageMaker)
+
+    - Open SageMaker Terminal
+    - Do `cd SageMaker`
+    - Clone Lab Guides `git clone https://github.com/CloudaYolla/ForecastPOC.git`
+    - Clone SageMaker examples `git clone https://github.com/aws-samples/amazon-forecast-samples.git`
 
 
+### Cleaning up resources 
 
-## Validating and Importing Target Time Series Data
+The scripts in this POC provision various Forecast, S3, and IAM resources. If you ran this POC in your own account and would like to avoid ongoing charges related to these resources, open `Cleanup.ipynb` and run the cleanup scripts provided there. Wait for the scripts to complete, then tear down the CloudFormation stack you created at the beginning of these instructions.
 
-Open `Validating_and_Importing_Target_Time_Series_Data.ipynb` and follow along there.
 
-Once this has completed you can move onto prepping your Related Time Series data though you may not want to actually delete it after the import completes. 
-If the data resides within your DatasetGroup then models will use it automatically when you train them and you are not able to determine the impact of just your base time series data easily.
+**Very Important:** SageMaker Notebooks run on EC2, and therefore you will be billed by the second unless you save your work (by downloading to your local computer) & terminate the SageMaker notebook instance. 
 
-## Validating and Importing Related Time Series Data
-
-Amazon Forecast can certainly generate predictions using only the target data but the real power of the service comes into play when adding related time series information to facilitate better understanding of external signals, as well as item metadata that allows DeepAR+ to make assumptions about how a time series may behave when missing chunks of information.
-
-Open `Validating_and_Importing_Related_Time_Series_Data.ipynb` and follow along there to prepare the dataset for the POC/Amazon Forecast.
-
-## Creating and Evaluating Your First Predictors
-
-In Amazon Forecast a model that has been trained on your data is called a Predictor, the notebook below will guide you through using the data you imported earlier to build your first predictors. At the end there is a bonus bit on running AutoML to determine the best. This is advised to be done before going home for the day as the process will take a number of hours to complete.
-
-Open `Creating_and_Evaluating_Predictors.ipynb` and follow along to build these Predictors and see their results.
-
-## Importing Related Time Series Data
-
-Upon completing the initial models with just the target time series data go back to `Validating_and_Importing_Related_Time_Series_Data.ipynb` and execute the import job again if you deleted it during your validation phase. Once the data has been imported you are ready to move onto the next session of building a model with the related data.
-
-## Creating and Evaluating Related Time Series Enabled Predictors
-
-During this section you'll only be creating new models with Prophet and DeepAR+ this is because they are the only algorithms to incorporate related time series into their forecasts at this time within the service. As existing algorithms are modified or new ones are introduced this section will expand to cover those.
-
-To get started simply open `Creating_and_Evaluating_Related_Time_Predictors.ipynb` this will be the last section of the POC that is guided and the rest will be an exploratory analysis to determine the value of any improvements.
-
+Please 
+ 1. download the notebook (if you did any changes) to your computer by selecting ` File -> Download as -> Notebook (.ipynb)`. 
+ 1. Terminate this instance. Remember that you can always recreate it from the `AWS SageMaker Console` again.  
+ 
 ## Next Steps
 
 Identify your use case and data sources, and start testing Amazon Forecast. Contact your AWS team for PoC/pilot support.
 
-## Cleanup
+Thank you.
 
-The scripts in this POC provision various Forecast, S3, and IAM resources. If you ran this POC in your own account and would like to avoid ongoing charges related to these resources, open `Cleanup.ipynb` and run the cleanup scripts provided there. Wait for the scripts to complete, then tear down the CloudFormation stack you created at the beginning of these instructions. 
